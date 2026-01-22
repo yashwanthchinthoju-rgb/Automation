@@ -2,11 +2,14 @@ package Locators;
 
 import org.openqa.selenium.By;
 
-public class AddEmployees {
+public class Locators {
+
 
     public By Emailfield = By.xpath("//input[@type='email']");
     public By Passwordfield = By.xpath("//input[@id='userPassword']");
     public By LoginButton = By.xpath("//button[@type='submit']");
+    public By LogoCheck = By.xpath("//img[@class='company-logo-header']");
+    public By Invalid = By.xpath("//p[text()='Invalid credentials']");
     public By Employees = By.xpath("(//p[text()='Employees'])[1]");
     public By AddEmployees = By.xpath("//button[contains(text(),'Add Employee')]");
     public By AddButton = By.xpath("//button[text()='Add']");
@@ -27,7 +30,5 @@ public class AddEmployees {
     public By salary = By.xpath("//input[@id='salary']");
     public By location = By.xpath("//input[@name='location']");
     public By reportingTo = By.xpath("//select[@id='reportingTo']");
-
-
-
 }
+

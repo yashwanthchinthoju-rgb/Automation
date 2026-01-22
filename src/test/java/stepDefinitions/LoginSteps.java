@@ -1,79 +1,26 @@
 package stepDefinitions;
 
 import Methods.LoginPage;
-import io.cucumber.java.After;
+import hooks.Hooks;
 import io.cucumber.java.en.*;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import org.junit.Assert;
 
 public class LoginSteps {
 
-    WebDriver driver;
     LoginPage login;
 
-    @Given("Open browser")
-    public void open_browser() {
-        driver = new EdgeDriver();
-        driver.manage().window().maximize();
-        login = new LoginPage(driver);
+    @Given("user launches the browser")
+    public void user_launches_the_browser() {
+        login = new LoginPage(Hooks.driver);
     }
 
-    @When("enter Url")
-    public void enter_url() {
-
-        driver.get("https://dev.urbuddi.com/login");
+    @And("user navigates to the application url")
+    public void user_navigates_to_the_application_url() {
+        // URL is already opened in Hooks
     }
 
-    @Then("Enter Credentials {string} and {string}")
-    public void enter_credentials_and_login(String username, String password) {
-        login.email(username);
-        login.password(password);
-        login.loginButton();
-    }
-
-    @Then("Validate login result {string}")
-    public void validate_login_result(String result) {
-        if ("pass".equalsIgnoreCase(result)) {
-            boolean isDisplayed = login.logoCheck();
-            takeScreenshot("Login_Success");
-            System.out.println("Result: PASS (logo displayed)");
-        } else {
-            boolean isInvalid = login.invalid();
-            System.out.println("Result: PASS (invalid credentials)");
-        }
-    }
-
-
-    public void takeScreenshot(String screenshotName) {
-        TakesScreenshot ts = (TakesScreenshot) driver;
-        File src = ts.getScreenshotAs(OutputType.FILE);
-
-        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-
-        File dest = new File("screenshots/" + screenshotName + "_" + timestamp + ".png");
-        try {
-            Files.createDirectories(dest.getParentFile().toPath());
-            Files.copy(src.toPath(), dest.toPath());
-            System.out.println("Screenshot saved at: " + dest.getAbsolutePath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @After
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-            System.out.println("Browser closed for this scenario.");
-        }
+    @When("user logs in with valid username and password")
+    public void user_logs_in_with_valid_username_and_password() {
+        login.login("yashwanth.chinthoju@optimworks.com", "Srikrishna@123");
     }
 }

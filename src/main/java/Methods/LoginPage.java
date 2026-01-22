@@ -1,5 +1,6 @@
 package Methods;
 
+import Locators.Locators;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,52 +11,39 @@ import java.time.Duration;
 public class LoginPage {
 
     WebDriver driver;
-    Locators.LoginPage loc;
     WebDriverWait wait;
+    Locators loc = new Locators();
 
-    public LoginPage(WebDriver driver){
+    public LoginPage(WebDriver driver) {
         this.driver = driver;
-        loc = new Locators.LoginPage();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
     }
 
-    public void email(String Email){
-
-        WebElement emailfield = driver.findElement(loc.Emailfield);
-        emailfield.sendKeys(Email);
-
+    public void enterEmail(String email) {
+        driver.findElement(loc.Emailfield).sendKeys(email);
     }
 
-    public void password(String Password){
-
-        WebElement password = driver.findElement(loc.Passwordfield);
-        password.sendKeys(Password);
-
+    public void enterPassword(String password) {
+        driver.findElement(loc.Passwordfield).sendKeys(password);
     }
 
-    public void loginButton(){
-
-        WebElement LoginButton = driver.findElement(loc.LoginButton);
-        LoginButton.click();
-
+    public void clickLogin() {
+        driver.findElement(loc.LoginButton).click();
     }
 
+    public void login(String email, String password) {
+        enterEmail(email);
+        enterPassword(password);
+        clickLogin();
+    }
 
-    public boolean invalid(){
-
+    public boolean isInvalidCredentialDisplayed() {
         WebElement msg = wait.until(ExpectedConditions.visibilityOfElementLocated(loc.Invalid));
-        return msg != null && msg.getText().contains("Invalid credentials");
-
+        return msg.isDisplayed();
     }
 
-    public boolean logoCheck(){
+    public boolean isLogoDisplayed() {
         WebElement logo = wait.until(ExpectedConditions.visibilityOfElementLocated(loc.LogoCheck));
-
-        if (logo == null) {
-            return false;
-        }
         return logo.isDisplayed();
-
     }
 }

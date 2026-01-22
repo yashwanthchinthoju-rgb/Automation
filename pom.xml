@@ -40,6 +40,13 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- Cucumber TestNG -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-testng</artifactId>
+      <version>7.15.0</version>
+    </dependency>
+
     <!-- Selenium 4 -->
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
